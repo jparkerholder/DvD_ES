@@ -1,17 +1,22 @@
 # Diversity via Determinants (DvD)
 
-This code is a clean version of the DvD algorithm used in the paper Effective Diversity in Population Based Reinforcement Learning. This only supports the single mode experiments, point, Swimmer, Walker2d, BipedalWalker and HalfCheetah.
+This code is a clean version of the DvD-ES algorithm used in the paper Effective Diversity in Population Based Reinforcement Learning, appearing at NeurIPS 2020. 
 
-In requirements.txt we have all the requirements to run this. There are quite a few, because they came alongside some of the other packages and we thought it was better to be inclusive. The code requires a MuJoCo license, which can be obtained from https://www.roboti.us/license.html. All full-time students get this for free. This should be easy to run, once the MuJoCo license is working.
+This only supports the single mode experiments, point, Swimmer, Walker2d, BipedalWalker and HalfCheetah, but you can most certainly add your own!
 
-The code is loosely based on ARS, from here. We have a Learner class which contains the agents, and then each agent induces its own workers to run the rollouts.
+The main requirements are: ray, gym, numpy, scipy, scikit-learn and pandas. The code requires a MuJoCo license, which can be obtained from [here](https://www.roboti.us/license.html). All full-time students get this for free. This should be easy to run, once the MuJoCo license is working.
+
+The code is loosely based on ARS, from [here](https://github.com/modestyachts/ARS). We have a Learner class which contains the agents, and then each agent induces its own workers to run the rollouts. For the environments used in the paper, we have a file experiments.py which includes the hyperparameters. If you want to try others, then pick the config from the env with the most similar state and action dimensions. 
 
 To run the `Swimmer` experiments type the following:
 
-`python train.py --env_name Swimmer-v2 --num_workers 4`
+`python train.py --env_name Swimmer-v2 --num_workers N`
 
-The current implementation uses the default settings from the experiments in the paper.
+Where N is the number of cores on your machine. Or maybe one less, so you can still do other things :) 
 
+When it runs, you should see something like the following:
+
+```
 
 Iter: 1, Eps: 1000, Mean: -932.038, Max: -791.4992, Best: 2, MeanD: 0.6747, MinD: 0.2805, Lam: 0.5
 Iter: 2, Eps: 2000, Mean: -886.4041, Max: -847.5858, Best: 2, MeanD: 0.779, MinD: 0.384, Lam: 0
@@ -33,3 +38,25 @@ Iter: 17, Eps: 17000, Mean: -672.0172, Max: -637.6803, Best: 2, MeanD: 2.5318, M
 Iter: 18, Eps: 18000, Mean: -672.0613, Max: -632.3368, Best: 3, MeanD: 2.8482, MinD: 0.2657, Lam: 0
 Iter: 19, Eps: 19000, Mean: -659.7307, Max: -625.5453, Best: 2, MeanD: 1.917, MinD: 0.3274, Lam: 0
 Iter: 20, Eps: 20000, Mean: -657.1595, Max: -607.0382, Best: 2, MeanD: 3.3323, MinD: 0.3485, Lam: 0
+```
+
+This means it has done 20 iterations, 20k episodes, the mean population reward is -657, max is -607. In this case we have a good outcome, because on this environment the local maximum is -780, so we have avoided it! The mean Euclidean distance between the policies is 3.33 and the minimum (between any two) distance is 0.3485 (we want this to be large to reduce redundancy). Lam is the lambda coefficient which in this case adapts between 0 and 0.5. The config for the bandit controller is in the bandits.py file. 
+
+The key parameter to switch between adaptive and a fixed lambda is w_nov (weight for novelty). If you set it to -1 it uses adaptive, otherwise, it uses whatever weight you give it. 
+
+Finally, please do get in touch for further questions, or for help using DvD for other RL algorithms. My email is jackph - at - robots.ox.ac.uk :)
+
+#### Citation
+
+```
+@incollection{parkerholder2020effective,
+  author    = {Jack Parker{-}Holder and
+               Aldo Pacchiano and
+               Krzysztof Choromanski and
+               Stephen Roberts},
+  title     = {Effective {D}iversity in {P}opulation{-}{B}ased {R}einforcement {L}earning},
+  year      = {2020},
+  booktitle = {Advances in Neural Information Processing Systems 34},
+}
+
+```
