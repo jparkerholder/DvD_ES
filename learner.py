@@ -1,7 +1,7 @@
 
 ## Requirements
 from utils import *
-from shared_noise import *
+from policies import get_policy
 import simpleenvs
 from worker import Worker
 from embeddings import embed

@@ -1,9 +1,7 @@
 
 from policies import FullyConnected
-from optimizers import Adam
 from learner import Learner
 from utils import *
-from shared_noise import *
 from es import population_update
 from experiments import get_experiment
 import simpleenvs
@@ -202,7 +200,7 @@ def main():
 
     params = get_experiment(params)
 
-    ray.init(plasma_directory="/tmp/")
+    ray.init()
     os.environ['RAY_USE_NEW_GCS'] = 'True'
 
     state_word = [str(params['states'].split('-')[0]) if params['w_nov'] > 0 else ''][0]

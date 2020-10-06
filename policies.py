@@ -1,9 +1,18 @@
 
-from filter import get_filter
+from utils import get_filter
 
 
 import numpy as np
 from scipy.special import softmax
+
+# can add more policies...
+def get_policy(params, seed=None):
+
+    if seed:
+        params['seed'] = seed
+
+    return(FullyConnected(params, params['seed']))
+
             
 class FullyConnected(object):
     

@@ -5,7 +5,7 @@ from sklearn.gaussian_process.kernels import Matern, RationalQuadratic
 import pandas as pd
 import time
 import os
-from utils import *
+from utils import batched_weighted_sum
 
 def normalize(data, wrt):
     data = (data - np.mean(data, axis=0))/(np.std(data, axis=0)+1e-8)

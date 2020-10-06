@@ -1,7 +1,7 @@
 
 ## Requirements
-from shared_noise import *
-from utils import get_policy
+from utils import SharedNoiseTable
+from policies import get_policy
 
 ## External
 import ray
