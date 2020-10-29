@@ -54,7 +54,7 @@ Finally, please do get in touch for further questions, or for help using DvD for
                Aldo Pacchiano and
                Krzysztof Choromanski and
                Stephen Roberts},
-  title     = {Effective {D}iversity in {P}opulation{-}{B}ased {R}einforcement {L}earning},
+  title     = {Effective {D}iversity in {P}opulation {B}ased {R}einforcement {L}earning},
   year      = {2020},
   booktitle = {Advances in Neural Information Processing Systems 34},
 }
